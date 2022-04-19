@@ -13,32 +13,50 @@ import org.primefaces.event.RowEditEvent;
 @Named("personaBean")
 @RequestScoped
 public class PersonaBean {
-    
+
     Logger log = LogManager.getRootLogger();
-    
+
     @Inject
     private PersonaService personaService;
 
     private Persona personaSeleccionada;
-    
+
     List<Persona> personas;
-    
-    public PersonaBean(){
+
+    List<Persona> personasFilter;
+
+    public PersonaBean() {
         log.debug("Iniciando el objeto PersonaBean");
     }
-    
+
     @PostConstruct
-    public void inicializar(){
+    public void inicializar() {
         this.personas = personaService.listarPersonas();
         this.personaSeleccionada = new Persona();
     }
-    
-    public void editListener(RowEditEvent event){
+
+    public void editListener(RowEditEvent event) {
         Persona persona = (Persona) event.getObject();
         personaService.modificarPersona(persona);
     }
-    
-      public Persona getPersonaSeleccionada() {
+
+    public void agregarPersona() {
+        this.personaService.registrarPersona(personaSeleccionada);
+        this.personas.add(personaSeleccionada);
+        this.personaSeleccionada = null;
+    }
+
+    public void eliminarPersona() {
+        this.personaService.eliminarPersona(personaSeleccionada);
+        this.personas.remove(this.personaSeleccionada);
+        this.personaSeleccionada = null;
+    }
+
+    public void reiniciarPersonaSeleccionada() {
+        this.personaSeleccionada = new Persona();
+    }
+
+    public Persona getPersonaSeleccionada() {
         return personaSeleccionada;
     }
 
@@ -53,20 +71,12 @@ public class PersonaBean {
     public void setPersonas(List<Persona> personas) {
         this.personas = personas;
     }
-    
-    public void agregarPersona(){
-        this.personaService.registrarPersona(personaSeleccionada);
-        this.personas.add(personaSeleccionada);
-        this.personaSeleccionada = null;
+
+    public List<Persona> getPersonasFilter() {
+        return personasFilter;
     }
-    
-    public void eliminarPersona(){
-        this.personaService.eliminarPersona(personaSeleccionada);
-        this.personas.remove(this.personaSeleccionada);
-        this.personaSeleccionada = null;
-    }
-    
-    public void reiniciarPersonaSeleccionada(){
-        this.personaSeleccionada = new Persona();
+
+    public void setPersonasFilter(List<Persona> personasFilter) {
+        this.personasFilter = personasFilter;
     }
 }

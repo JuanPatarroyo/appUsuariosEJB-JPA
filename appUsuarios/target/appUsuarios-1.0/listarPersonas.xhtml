@@ -7,6 +7,8 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Listado de Personas</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+        <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
     </h:head>
     <h:body>
         <p:ajaxStatus style="width: 16px;height: 16px;" id="ajaxStatusPanel">
@@ -23,19 +25,24 @@
             <p:growl id="messages" showDetail="true" />
             <p:messages/>
 
-            <p:dataTable id="personasDataTable" value="#{personaBean.personas}" 
+            <p:dataTable id="personasDataTable" widgetVar="personasDataTable" value="#{personaBean.personas}" 
                          var="persona" editable="true" rowKey="#{persona.idPersona}" 
-                         selection="#{personaBean.personaSeleccionada}" selectionMode="single" >
+                         selection="#{personaBean.personaSeleccionada}" selectionMode="single" 
+                         reflow="true" rows="5" paginator="true" emptyMessage="No se encontraron personas" 
+                         filteredValue="#{personaBean.personasFilter}">
 
                 <f:facet name="header">
                     Listado de Personas
+                    <p:outputPanel>
+                        <p:inputText id="globalFilter" onkeyup="PF('personasDataTable').filter()" style="width:150px" placeholder="Buscar"/>
+                    </p:outputPanel>
                 </f:facet>
-                
-                <p:column headerText="Id">
+
+                <p:column filterBy="#{persona.idPersona}" filterMatchMode="contains" headerText="Id" width="30" sortBy="#{persona.idPersona}">
                     <h:outputText value="#{persona.idPersona}" />
                 </p:column>
 
-                <p:column headerText="Nombre">
+                <p:column filterBy="#{persona.nombre}" filterMatchMode="contains" headerText="Nombre" sortBy="#{persona.nombre}">
                     <p:cellEditor>
                         <f:facet name="output">
                             <h:outputText value="#{persona.nombre}" />
@@ -46,7 +53,7 @@
                     </p:cellEditor>
                 </p:column>
 
-                <p:column headerText="Apellido">
+                <p:column filterBy="#{persona.apellido}" filterMatchMode="contains" headerText="Apellido" sortBy="#{persona.apellido}">
                     <p:cellEditor>
                         <f:facet name="output">
                             <h:outputText value="#{persona.apellido}" />
@@ -57,7 +64,7 @@
                     </p:cellEditor>
                 </p:column>
 
-                <p:column headerText="Email">
+                <p:column filterBy="#{persona.email}" filterMatchMode="contains" headerText="Email" sortBy="#{persona.apellido}">
                     <p:cellEditor>
                         <f:facet name="output">
                             <h:outputText value="#{persona.email}" />
@@ -68,7 +75,7 @@
                     </p:cellEditor>
                 </p:column>
 
-                <p:column headerText="Teléfono">
+                <p:column filterBy="#{persona.telefono}" filterMatchMode="contains" headerText="Teléfono" sortBy="#{persona.telefono}">
                     <p:cellEditor>
                         <f:facet name="output">
                             <h:outputText value="#{persona.telefono}" />
@@ -84,14 +91,14 @@
                                      update=":dialogForm" oncomplete="PF('personaDialog').show()" />
                 </f:facet>
 
-                <p:column headerText="Opciones" style="width: 50px">
+                <p:column headerText="Opciones" width="80">
                     <p:rowEditor/>
                 </p:column>
 
                 <p:ajax event="rowEdit" listener="#{personaBean.editListener}"/>
 
             </p:dataTable>
-            
+
             <p:contextMenu for="personasDataTable">
                 <p:menuitem value="Eliminar" update="personasListForm:personasDataTable" icon="ui-icon-close" 
                             actionListener="#{personaBean.eliminarPersona}" />
@@ -99,23 +106,25 @@
 
         </h:form>
 
-        <p:dialog id="personaDlg" widgetVar="personaDialog" header="Agregar Persona" modal="true" showEffect="fade" hideEffect="fade" 
-            resizable="false" >
+        <p:dialog id="personaDlg" widgetVar="personaDialog" header="Agregar Persona" modal="true" showEffect="fade" 
+                  hideEffect="fade" resizable="false">
             <h:form id="dialogForm">
                 <p:outputPanel id="personaDetail" style="text-align: center">
-                    <p:panelGrid id="display" columns="4" columnClasses="label, value" >
+                    <p:panelGrid id="display" columns="4" layout="flex" 
+                                 contentStyleClass="ui-fluid"
+                                 columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12">
                         <h:outputText value="Nombre" />
                         <h:inputText value="#{personaBean.personaSeleccionada.nombre}" />
-                        
+
                         <h:outputText value="Apellido" />
                         <h:inputText value="#{personaBean.personaSeleccionada.apellido}" />
-                        
+
                         <h:outputText value="Email" />
                         <h:inputText value="#{personaBean.personaSeleccionada.email}" />
-                        
+
                         <h:outputText value="Telefono" />
                         <h:inputText value="#{personaBean.personaSeleccionada.telefono}" />
-                        
+
                         <f:facet name="footer" >
                             <p:commandButton value="Agregar" actionListener="#{personaBean.agregarPersona}" 
                                              update="display,:personasListForm:personasDataTable" oncomplete="PF('personaDialog').hide();" />
