@@ -48,7 +48,9 @@
                             <h:outputText value="#{persona.nombre}" />
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputText value="#{persona.nombre}" />
+                            <p:inputText value="#{persona.nombre}" >
+                                <p:keyFilter regEx="/[a-zA-ZÀ-ú\\s\\' ]+/"/>
+                            </p:inputText>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -59,7 +61,9 @@
                             <h:outputText value="#{persona.apellido}" />
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputText value="#{persona.apellido}" />
+                            <p:inputText value="#{persona.apellido}" >
+                                <p:keyFilter regEx="/[a-zA-ZÀ-ú\\s\\' ]+/"/>
+                            </p:inputText>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -70,7 +74,9 @@
                             <h:outputText value="#{persona.email}" />
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputText value="#{persona.email}" />
+                            <p:inputText value="#{persona.email}" >
+                                <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+                            </p:inputText>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -81,7 +87,9 @@
                             <h:outputText value="#{persona.telefono}" />
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputText value="#{persona.telefono}" />
+                            <p:inputText value="#{persona.telefono}" >
+                                <p:keyFilter mask="num" />
+                            </p:inputText>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -114,16 +122,24 @@
                                  contentStyleClass="ui-fluid"
                                  columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12">
                         <h:outputText value="Nombre" />
-                        <h:inputText value="#{personaBean.personaSeleccionada.nombre}" />
+                        <p:inputText value="#{personaBean.personaSeleccionada.nombre}" >
+                            <p:keyFilter regEx="/[a-zA-ZÀ-ú\\s\\' ]+/"/>
+                        </p:inputText>
 
                         <h:outputText value="Apellido" />
-                        <h:inputText value="#{personaBean.personaSeleccionada.apellido}" />
+                        <p:inputText value="#{personaBean.personaSeleccionada.apellido}" >
+                            <p:keyFilter regEx="/[a-zA-ZÀ-ú\\s\\' ]+/"/>
+                        </p:inputText>
 
                         <h:outputText value="Email" />
-                        <h:inputText value="#{personaBean.personaSeleccionada.email}" />
+                        <p:inputText value="#{personaBean.personaSeleccionada.email}" >
+                            <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+                        </p:inputText>
 
                         <h:outputText value="Telefono" />
-                        <h:inputText value="#{personaBean.personaSeleccionada.telefono}" />
+                        <p:inputText value="#{personaBean.personaSeleccionada.telefono}">
+                            <p:keyFilter mask="num" />
+                        </p:inputText>
 
                         <f:facet name="footer" >
                             <p:commandButton value="Agregar" actionListener="#{personaBean.agregarPersona}" 
