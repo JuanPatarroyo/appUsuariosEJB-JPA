@@ -6,6 +6,7 @@ This application uses:
 - EJB (Enterprise Java Beans)
 - Primefaces
 - MVC
+- REST WebServices
 
 ## Requirements 💻
 
