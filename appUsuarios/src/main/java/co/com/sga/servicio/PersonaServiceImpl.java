@@ -1,6 +1,5 @@
 package co.com.sga.servicio;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -8,9 +7,12 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import co.com.sga.datos.PersonaDao;
 import co.com.sga.domain.Persona;
+import co.com.ws.servicio.PersonaServiceWs;
+import javax.jws.WebService;
 
 @Stateless
-public class PersonaServiceImpl implements PersonaServiceRemote, PersonaService {
+@WebService(endpointInterface = "co.com.ws.servicio.PersonaServiceWs")
+public class PersonaServiceImpl implements PersonaServiceRemote, PersonaService, PersonaServiceWs {
 
     @Inject
     private PersonaDao personaDao;
