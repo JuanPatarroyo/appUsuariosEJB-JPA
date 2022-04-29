@@ -2,11 +2,11 @@
 
 This application uses:
 - Java (JSF)
+- REST WebServices
 - JPA (Java Persistence Api)
 - EJB (Enterprise Java Beans)
 - Primefaces
-- MVC
-- REST WebServices
+- MVC (Model View Controller)
 
 ## Requirements 💻
 
