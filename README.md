@@ -7,6 +7,7 @@ This application uses:
 - EJB (Enterprise Java Beans)
 - Primefaces
 - MVC (Model View Controller)
+- Java Security (ROLE_ADMIN, ROLE_USER and ROLE_GUEST)
 
 ## Requirements 💻
 
