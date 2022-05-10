@@ -28,4 +28,20 @@
         <servlet-name>JerseyWebApplication</servlet-name>
         <url-pattern>/webservice/*</url-pattern>
     </servlet-mapping>
+    <!-- security tag -->
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>Login</realm-name>
+    </login-config>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>AplicacionWebJSF</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ROLE_ADMIN</role-name>
+            <role-name>ROLE_USER</role-name>
+            <role-name>ROLE_GUEST</role-name>
+        </auth-constraint>
+    </security-constraint>
 </web-app>

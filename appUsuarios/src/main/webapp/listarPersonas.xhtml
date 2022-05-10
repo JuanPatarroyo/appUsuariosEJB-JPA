@@ -20,11 +20,10 @@
                 <h:outputText value="" />
             </f:facet>
         </p:ajaxStatus>
-
-        <h:form id="personasListForm">
+        <h:outputText value="Bienvenido: #{p:userPrincipal()}" />
+        <h:form id="personasListForm" rendered="#{p:ifGranted('ROLE_ADMIN') || p:ifGranted('ROLE_USER')}">
             <p:growl id="messages" showDetail="true" />
             <p:messages/>
-
             <p:dataTable id="personasDataTable" widgetVar="personasDataTable" value="#{personaBean.personas}" 
                          var="persona" editable="true" rowKey="#{persona.idPersona}" 
                          selection="#{personaBean.personaSeleccionada}" selectionMode="single" 
